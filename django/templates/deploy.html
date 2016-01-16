@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Dashboard for Docker</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="/static/css/style.css" rel="stylesheet">
+  </head>
+
+<body>
+<style>
+  body{font-family: "Helvetica Neue",Helvetica,"Microsoft YaHei",Arial,"宋体","Hiragino Sans GB",STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif;}
+   .custom-btn{height: 80%; line-height: 80%; padding: 5px 20px; background-color: #39b3d7; color:white; border:1px solid #39b3d7; border-radius: 5px;}
+   .self-active{background-color:  #444;}
+   .self-active:hover{background-color: #888;}
+   .notshow{display: none;}
+</style>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Docker 云平台</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="self-active"><a href="#">产品</a></li>
+              <li><a href="#">帮助文档</a></li>
+              <li><a href="#">{{ user.userName }}</a></li>
+            </ul>
+          </div>
+
+        </div>
+  </nav>
+
+<style type="text/css">
+.position-nav>a{width: 5em;}
+.position-nav{margin-bottom: 20px;}
+.step-head{font-size: 1.2em;}
+span.show-item{width:20px; height: 20px; line-height: 20px; border-radius: 1.5em; background-color: #aaa;text-align: center;display: block;float:left; margin-right: 1em; }
+.step-item-active{color: #0bf;}
+.step-item-active .show-item{background: #0bf; color: white;}
+</style>
+  <div class="container-fluid">
+    <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1 main">
+
+      <div class="position-nav">
+        <a href="{% url 'project' %}">项目</a> > <a href="#">部署项目</a>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="step-handle">
+        <div class="step-head">
+          <div class="step-item step col-sm-3 step-item-active">
+            <span class="show-item"> 1 </span>
+            <span> 镜像来源 </span>
+          </div>
+          <div class="step-item step col-sm-3">
+            <span class="show-item"> 2 </span>
+            <span> 容器配置 </span>
+          </div>
+          <div class="step-item step col-sm-3"s>
+            <span class="show-item"> 3 </span>
+            <span> 高级设置 </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <style>
+        .m-select{margin: 20px 0; font-size: 1.1em;}
+        .m-select-label{margin-right: 10px;}
+        .m-select-item{padding: 10px 20px; border-radius: 15px; color: #418ac7; cursor: pointer;}
+        .m-select-item-active{background: #418ac7; color:white;}
+        .m-select-table{border-top: 1px solid #888; font-size: 1.1em;}
+        .m-image-item{padding: 5px 0; text-align: center;}
+        .m-image-item:hover{background: #afe;}
+        .step-body{margin-top: 40px;}
+        </style>
+        <div class="mirror-body step-body">
+          <div class="m-select">
+            <span class="m-select-label">选择镜像:</span>
+            <span class="m-select-item m-select-item-active">常用</span>
+            <span class="m-select-item">公有</span>
+            <a href="{% url 'image_coll' %}" class="m-select-item">上传</a>
+            <span class="m-select-item">私有</span>
+          </div>
+          <div class="m-select-table">
+
+            <div class="m-image-item">
+              <div class="m-image-td col-sm-2">
+                NoSQL
+              </div>
+              <div class="m-image-td col-sm-3">
+                NoSQL
+              </div>
+              <div class="m-image-td col-sm-4">
+               <a href="#" class="btn btn-info btn-xs deploy-handle">部署</a>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="m-image-item">
+              <div class="m-image-td col-sm-2">
+                NoSQL
+              </div>
+              <div class="m-image-td col-sm-3">
+                NoSQL
+              </div>
+              <div class="m-image-td col-sm-4">
+                <a href="#" class="btn btn-info btn-xs deploy-handle">部署</a>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="config-body step-body notshow">
+         <form action ="#" method="post" class="form-horizontal">
+            <!--<div class="form-group">
+              <label for="appName" class="col-sm-2 control-label">Image Name </label>
+              <div class="col-sm-6">
+                    NoSQL
+              </div>
+            </div>-->
+            <div class="form-group">
+              <label for="cpuSize" class="col-sm-2 control-label">CPU Size </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="cpuSize" name="cpuSize">
+                  <option value="0">2G</option>
+                  <option value="1">4G</option>
+                  <option value="2">8G</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="memorySize" class="col-sm-2 control-label">Memory Size </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="memorySize" name="memorySize">
+                  <option value="0">200G</option>
+                  <option value="1">500G</option>
+                  <option value="2">1T</option>
+                  <option value="2">2T</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="version" class="col-sm-2 control-label">Version</label>
+              <div class="col-sm-6">
+              <input type="text" class="form-control" id="version" name="version" placerholder="版本">
+              </div>
+            </div>
+            <div class="form-group last-btns">
+              <div class="col-sm-1 col-sm-offset-2">
+                <button type="submit" class="btn btn-info"> 创建 </button>
+              </div>
+            </div>
+         </form>
+        </div>
+      </div>
+
+      <div class="step-nav notshow">
+        <a href="#" class="btn btn-info">上一步</a>
+      </div>
+    </div>
+  </div>
+<style>
+  footer{height: 200px; width: 100%; background-color: #666;position: absolute; bottom: 0;}
+  .main-footer{margin-top: 30px; color:white;}
+  .main-footer>h4{color:white;}
+</style>
+  <footer>
+    <div class="container-fluid">
+      <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 main-footer">
+        <div class="col-sm-4 col-md-4">
+          <h4> 产品详情 </h4>
+          <p>主要服务</p>
+          <p>平台优势</p>
+        </div>
+        <div class="col-sm-4 col-md-4">
+          <h4> 产品详情 </h4>
+          <p>主要服务</p>
+          <p>平台优势</p>
+        </div>
+        <div class="col-sm-4 col-md-4">
+          <h4> 联系方式 </h4>
+          <p>主要服务</p>
+          <p>平台优势</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+        
+  <!-- script references -->
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/scripts.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('.m-select-item').click(function(){
+        $('.m-select-item').removeClass('m-select-item-active');
+        $(this).addClass('m-select-item-active');
+      });
+
+      $('.deploy-handle').click(function(){
+        $('div.step-item').removeClass('step-item-active');
+        $('.step-item:nth(1)').addClass('step-item-active');
+
+        $('.step-body').addClass('notshow');
+        $('.config-body').removeClass('notshow');
+        $('.step-nav').removeClass('notshow');
+      });
+
+      $('.step-nav').click(function(){
+        $('div.step-item').removeClass('step-item-active');
+        $('.step-item:nth(0)').addClass('step-item-active');
+
+        $('.step-body').removeClass('notshow');
+        $('.config-body').addClass('notshow');
+        $('.step-nav').addClass('notshow');
+      });
+    });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Dashboard for Docker</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="/static/css/style.css" rel="stylesheet">
+  </head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Docker 云平台</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Dashboard</a></li>
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% if user.userName == '' %}
+                Settings
+                {% else %}
+                {{ user.userName }}
+                {% endif %}
+                </a>
+                <style>
+                .register-box{ width: 400%; z-index: 100;background-color: white;}
+                .register-title{color:white; background-color: black; padding: 10px;}
+                .register-content{margin-top: 20px;}
+                .menu-m-box{width: 400%; z-index: 100;background-color: white;}
+                .menu-s-box{width: 200%; z-index: 100; background-color: white;}
+
+                </style>
+                {% if user.userName == '' %}
+                <div class="menu-m-box dropdown-menu" role="menu">
+                  <div class="register-title text-center">
+                    注册
+                  </div>
+                  <div class="register-content">
+                    <form action="{% url 'register' %}" method="post">
+                      <div class="form-group">
+                          <div class="col-xs-12">
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user">
+                                </span>
+                              </span>
+                              <input type="text" id="username" name="userName" class="form-control" placeholder="用户名">
+                            </div>
+                          </div>
+                          <div style="clear:both;"></div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-xs-12">
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user">
+                                </span>
+                              </span>
+                              <input type="password" id="password" name="userPwd" class="form-control" placeholder="密码">
+                            </div>
+                          </div>
+                          <div style="clear:both;"></div>
+                      </div>
+
+                      <div class="form-group form-actions">
+                        <div class="col-xs-4 col-xs-offset-5">
+                          <button type="" class="btn btn-sm btn-info">
+                            注册
+                          </button>
+                        </div>
+                        <div style="clear:both;"></div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                {% else %}
+                <div class="menu-s-box dropdown-menu" role="menu">
+                  <form action="{% url 'logout' %}">
+                    <button  type="submit" class="unlogin btn btn-block btn-sm">
+                      退出
+                    </button>
+                  </form>
+                </div>
+                {% endif %}
+
+              </li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Help</a></li>
+            </ul>
+            {% if user.userName == '' %}
+            <form class="navbar-form navbar-right" method="post" action="{% url 'login'%}">
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input type="email" id="inputEmail" name="userName" class="form-control" placeholder="Email address">
+              <label for="inputPassword" class="sr-only" >Password</label>
+              <input type="password" id="inputPassword" name="userPwd" class="form-control" placeholder="Password">
+              <button class="btn btn-default btn-primary" type="submit">Sign in</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+      <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">    
+        <ul class="nav nav-sidebar">
+          <li><a href="{% url 'dashboard' %}">Overview</a></li>
+          <li><a href="{% url 'image_manage' %}">Image Management</a></li>
+          <li><a href="{% url 'image_coll' %}">Image Collocation</a></li>
+          <li><a href="{% url 'export' ">Export</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="{% url 'app_manage' %}">APP Management</a></li>
+          <li><a href="">Mutilversion control</a></li>
+          <li class="active"><a href="{% url 'app_create' %} ">Create APP</a></li>
+          <li><a href="">Another nav item</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">monitorning</a></li>
+          <li><a href="">host monitor</a></li>
+          <li><a href="">docker  monitor</a></li>
+        </ul>
+            
+      </div><!--/span-->
+          
+      <div class="col-sm-9 col-md-10 main">
+        
+        <!--toggle sidebar button-->
+        <p class="visible-xs">
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button>
+        </p>
+        
+       <h1 class="page-header">
+       {% if user.userName == '' %}
+       请先登录
+       {% else %}
+        创建项目
+       {% endif %}
+       </h1>
+      
+       {% if user.userName != '' %}
+       <form action ="#" method="post" class="form-horizontal">
+          <div class="form-group">
+            <label for="appName" class="col-sm-2 control-label">APP Name </label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="appName" name="appName" placerholder="项目名">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cpuSize" class="col-sm-2 control-label">CPU Size </label>
+            <div class="col-sm-6">
+              <select class="form-control" id="cpuSize" name="cpuSize">
+                <option value="0">2G</option>
+                <option value="1">4G</option>
+                <option value="2">8G</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="memorySize" class="col-sm-2 control-label">Memory Size </label>
+            <div class="col-sm-6">
+              <select class="form-control" id="memorySize" name="memorySize">
+                <option value="0">200G</option>
+                <option value="1">500G</option>
+                <option value="2">1T</option>
+                <option value="2">2T</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="version" class="col-sm-2 control-label">Version</label>
+            <div class="col-sm-6">
+            <input type="text" class="form-control" id="version" name="version" placerholder="版本">
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-info">自动侦测版本</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-6">
+            <input type="text" class="form-control" id="description" name="description" placerholder="描述">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="image1" class="col-sm-2 control-label">Image1:</label>
+            <div class="col-sm-3">
+                <select class="form-control" id="imageName">
+                  <option value="0">Image 1</option>
+                  <option value="1">Image 2</option>
+                  <option value="2">Image 3</option>
+                  <option value="3">Image 4</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                  <select class="form-control" id="image_version">
+                    <option value="0">Version1</option>
+                     <option value="1">Version2</option>
+                  </select>
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-info add-image">添加新Image</button>
+            </div>
+          </div>
+
+          <div class="form-group last-btns">
+            <div class="col-sm-1 col-sm-offset-2">
+              <button type="submit" class="btn btn-info"> 测试 </button>
+            </div>
+            <div class="col-sm-1">
+              <button type="submit" class="btn btn-info"> 创建 </button>
+            </div>
+          </div>
+       </form>
+       {% endif %}
+      </div><!--/main-->
+
+    </div>
+  </div><!--/.container-->
+       
+  <!-- script references -->
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/scripts.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.add-image').click(function(){
+          newEle = $(this).parents('.form-group').clone(true);
+          $('.last-btns').before(newEle);
+          $(this).addClass('hidden');
+          return false;
+        })
+      })
+    </script>
+  </body>
+</html>
